@@ -1,0 +1,283 @@
+CREATE TABLE `departamento` 
+(
+  `Cod_Departamento` INT(11) NOT NULL AUTO_INCREMENT,
+  `Nombre_Departamento` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`Cod_Departamento`)
+);
+
+CREATE TABLE `ciudad` 
+(
+  `Cod_Ciudad` INT(11) NOT NULL AUTO_INCREMENT,
+  `Nom_Ciudad` VARCHAR(45) NULL DEFAULT NULL,
+  `Cod_Departamento_Ciudad` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`Cod_Ciudad`),
+    FOREIGN KEY (`Cod_Departamento_Ciudad`)
+    REFERENCES `departamento` (`Cod_Departamento`)
+);
+
+CREATE TABLE `parentesco` 
+(
+  `Cod_Parentesco` INT(11) NOT NULL AUTO_INCREMENT,
+  `Nom_Parentesco` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`Cod_Parentesco`)
+);
+
+CREATE TABLE `jornada` 
+(
+  `Cod_Jornada` INT(11) NOT NULL AUTO_INCREMENT,
+  `Nom_Jornada` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`Cod_Jornada`)
+);
+
+CREATE TABLE `genero` 
+(
+  `Cod_Genero` INT(11) NOT NULL AUTO_INCREMENT,
+  `Nom_Genero` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`Cod_Genero`)
+);
+
+CREATE TABLE `tipo_documento` 
+(
+  `Cod_Tipo_Doc` INT(11) NOT NULL AUTO_INCREMENT,
+  `Nom_Tipo_Doc` VARCHAR(50) NULL DEFAULT NULL,
+  PRIMARY KEY (`Cod_Tipo_Doc`)
+);
+
+CREATE TABLE `sede` 
+(
+  `Cod_Sede` INT(11) NOT NULL AUTO_INCREMENT,
+  `Nombre_Sede` VARCHAR(45) NULL DEFAULT NULL,
+  `Direccion` VARCHAR(45) NULL DEFAULT NULL,
+  `Telefono` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`Cod_Sede`)
+);
+
+
+CREATE TABLE `localidad`
+ (
+  `Cod_Localidad` INT(11) NOT NULL AUTO_INCREMENT,
+  `Nom_Localidad` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`Cod_Localidad`)
+);
+
+CREATE TABLE `eps` 
+(
+  `Cod_Eps` INT(11) NOT NULL AUTO_INCREMENT,
+  `Nom_Eps` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`Cod_Eps`)
+);
+
+CREATE TABLE `ruta`
+ (
+  `Cod_Ruta` INT(11) NOT NULL AUTO_INCREMENT,
+  `Nom_Monitor` VARCHAR(45) NULL DEFAULT NULL,
+  `Placa` VARCHAR(45) NULL DEFAULT NULL,
+  `Recorrido` VARCHAR(100) NULL DEFAULT NULL,
+  PRIMARY KEY (`Cod_Ruta`)
+);
+
+CREATE TABLE `area` 
+(
+  `Cod_Area` INT(11) NOT NULL AUTO_INCREMENT,
+  `Nombre_Area` VARCHAR(60) NULL DEFAULT NULL,
+  `Estado_Area` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`Cod_Area`)
+);
+
+CREATE TABLE `grupo_sanguineo` 
+(
+  `Cod_Grupo_Sanquineo` INT(11) NOT NULL AUTO_INCREMENT,
+  `Nombre_Gru_Sanguineo` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`Cod_Grupo_Sanquineo`)
+);
+
+CREATE TABLE `docente` 
+(
+  `Id_Docente` INT(11) NOT NULL,
+  `Cod_Tipo_Doc_Docente` INT(11) NULL DEFAULT NULL,
+  `Nombres_Docente` VARCHAR(45) NULL DEFAULT NULL,
+  `Apellidos_Docente` VARCHAR(45) NULL DEFAULT NULL,
+  `Email_Docente` VARCHAR(45) NULL DEFAULT NULL,
+  `Telefono_Docente` INT(11) NULL DEFAULT NULL,
+  `Fecha_Nacimiento_Docente` DATE NULL DEFAULT NULL,
+  `Cod_Area_Docente` INT(11) NULL DEFAULT NULL,
+  `Cod_Genero_Docente` INT(11) NULL DEFAULT NULL,
+  `Cod_Grupo_Sanquineo_Docente` INT(11) NULL DEFAULT NULL,
+  `Estado_Docente` VARCHAR(45) NULL DEFAULT NULL,
+  `Cod_Departamento_Docente` INT(11) NULL DEFAULT NULL,
+  `Cod_Ciudad_Docente` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`Id_Docente`),
+    FOREIGN KEY (`Cod_Ciudad_Docente`)
+    REFERENCES `ciudad` (`Cod_Ciudad`),
+    FOREIGN KEY (`Cod_Departamento_Docente`)
+    REFERENCES `departamento` (`Cod_Departamento`),
+      FOREIGN KEY (`Cod_Area_Docente`)
+    REFERENCES `area` (`Cod_Area`),
+    FOREIGN KEY (`Cod_Genero_Docente`)
+    REFERENCES `genero` (`Cod_Genero`),
+    FOREIGN KEY (`Cod_Grupo_Sanquineo_Docente`)
+    REFERENCES `grupo_sanguineo` (`Cod_Grupo_Sanquineo`),
+    FOREIGN KEY (`Cod_Tipo_Doc_Docente`)
+    REFERENCES `tipo_documento` (`Cod_Tipo_Doc`)
+);
+
+CREATE TABLE `curso` 
+(
+  `Cod_Curso` INT(11) NOT NULL AUTO_INCREMENT,
+  `Nom_Curso` VARCHAR(45) NULL DEFAULT NULL,
+  `Año_Academico` DATE NULL DEFAULT NULL,
+  `Id_Docente` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`Cod_Curso`),
+   FOREIGN KEY (`Id_Docente`)
+   REFERENCES `docente` (`Id_Docente`)
+);
+
+CREATE TABLE `estudiante` 
+(
+  `Id_Estudiante` INT(11) NOT NULL,
+  `Cod_Tipo_Doc_Estudiante` INT(11) NULL DEFAULT NULL,
+  `Nombres_Estudiante` VARCHAR(45) NULL DEFAULT NULL,
+  `Apellidos_Estudiante` VARCHAR(45) NULL DEFAULT NULL,
+  `Fecha_Nac_Estudiante` VARCHAR(45) NULL DEFAULT NULL,
+  `Direccion_Estudiante` VARCHAR(45) NULL DEFAULT NULL,
+  `Telefono_Estudiante` INT(11) NULL DEFAULT NULL,
+  `Cod_Jornada_Estudiante` INT(11) NULL DEFAULT NULL,
+  `Cod_Sede_Estudiante` INT(11) NULL DEFAULT NULL,
+  `Cod_Ciudad_Estudiante` INT(11) NULL DEFAULT NULL,
+  `Cod_Localidad_Estudiante` INT(11) NULL DEFAULT NULL,
+  `Cod_Eps_Estudiante` INT(11) NULL DEFAULT NULL,
+  `Cod_Ruta_Estudiante` INT(11) NULL DEFAULT NULL,
+  `Cod_Curso_Estudiante` INT(11) NULL DEFAULT NULL,
+  `Email_Estudiante` VARCHAR(45) NULL DEFAULT NULL,
+  `Cod_Grupo_Sanquineo_Estudiante` INT(11) NULL DEFAULT NULL,
+  `Cod_Genero_Estudiante` INT(11) NULL DEFAULT NULL,
+  `Estado_Estudiante` VARCHAR(45) NULL DEFAULT NULL,
+  `Cod_Departamento_Estu` INT(11) NULL DEFAULT NULL,
+  `Barrio` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`Id_Estudiante`),
+      FOREIGN KEY (`Cod_Departamento_Estu`)
+    REFERENCES `departamento` (`Cod_Departamento`),
+    FOREIGN KEY (`Cod_Jornada_Estudiante`)
+    REFERENCES `jornada` (`Cod_Jornada`),
+      FOREIGN KEY (`Cod_Genero_Estudiante`)
+    REFERENCES `genero` (`Cod_Genero`),
+      FOREIGN KEY (`Cod_Tipo_Doc_Estudiante`)
+    REFERENCES `tipo_documento` (`Cod_Tipo_Doc`),
+      FOREIGN KEY (`Cod_Sede_Estudiante`)
+    REFERENCES `sede` (`Cod_Sede`),
+      FOREIGN KEY (`Cod_Ciudad_Estudiante`)
+    REFERENCES `ciudad` (`Cod_Ciudad`),
+      FOREIGN KEY (`Cod_Barrio_Estudiante`)
+    REFERENCES `barrio` (`Cod_Barrio`),
+     FOREIGN KEY (`Cod_Localidad_Estudiante`)
+    REFERENCES `localidad` (`Cod_Localidad`),
+     FOREIGN KEY (`Cod_Eps_Estudiante`)
+    REFERENCES `eps` (`Cod_Eps`),
+      FOREIGN KEY (`Cod_Ruta_Estudiante`)
+    REFERENCES `ruta` (`Cod_Ruta`),
+      FOREIGN KEY (`Cod_Curso_Estudiante`)
+    REFERENCES `curso` (`Cod_Curso`),
+     FOREIGN KEY (`Cod_Grupo_Sanquineo_Estudiante`)
+    REFERENCES `grupo_sanguineo` (`Cod_Grupo_Sanquineo`)
+);
+
+CREATE TABLE `acudiente` 
+(
+  `Id_Acudiente` INT(11) NOT NULL,
+  `Cod_Tipo_Doc_Acudiente` INT(11) NULL DEFAULT NULL,
+  `Nombres_Acudiente` VARCHAR(45) NULL DEFAULT NULL,
+  `Apellidos_Acudiente` VARCHAR(45) NULL DEFAULT NULL,
+  `Cod_Parentesco` INT(11) NULL DEFAULT NULL,
+  `Direccion_Acudiente` VARCHAR(45) NULL DEFAULT NULL,
+  `Id_Estudiante` INT(11) NULL DEFAULT NULL,
+  `Email_Acudiente` VARCHAR(45) NULL DEFAULT NULL,
+  `Fecha_Naci_Acu` DATE NULL DEFAULT NULL,
+  `Cod_Genero_Acudi` INT(11) NULL DEFAULT NULL,
+  `Telefono_Acudiente` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`Id_Acudiente`),
+      FOREIGN KEY (`Cod_Parentesco`)
+    REFERENCES `parentesco` (`Cod_Parentesco`),
+      FOREIGN KEY (`Id_Estudiante`)
+    REFERENCES `estudiante` (`Id_Estudiante`),
+      FOREIGN KEY (`Cod_Genero`)
+   REFERENCES `genero` (`Cod_Genero`),
+      FOREIGN KEY (`Cod_Tipo_Doc`)
+   REFERENCES `tipo_documento` (`Cod_Tipo_Doc`)
+
+);
+
+CREATE TABLE `asignatura` 
+(
+  `Cod_Asignatura` INT(11) NOT NULL AUTO_INCREMENT,
+  `Nombre_Asignatura` VARCHAR(45) NULL DEFAULT NULL,
+  `Estado_Asignatura` VARCHAR(45) NULL DEFAULT NULL,
+  `Cod_Area_Asignatura` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`Cod_Asignatura`),
+     FOREIGN KEY (`Cod_Area_Asignatura`)
+    REFERENCES `area` (`Cod_Area`)
+);
+
+CREATE TABLE `citacion` 
+(
+  `Cod_Citacion` INT(11) NOT NULL AUTO_INCREMENT,
+  `Fecha_Citacion` DATE NULL DEFAULT NULL,
+  `Fecha_Registro` DATE NULL DEFAULT NULL,
+  `Observacion` VARCHAR(100) NULL DEFAULT NULL,
+  PRIMARY KEY (`Cod_Citacion`)
+);
+
+CREATE TABLE `colegio` 
+(
+  `Cod_Colegio` INT(11) NOT NULL AUTO_INCREMENT,
+  `Nombre_Colegio` VARCHAR(45) NULL DEFAULT NULL,
+  `Direccion_Colegio` VARCHAR(45) NULL DEFAULT NULL,
+  `Telefono_Colegio` INT(11) NULL DEFAULT NULL,
+  `Rector_Colegio` VARCHAR(45) NULL DEFAULT NULL,
+  `Resolucion_Aprobacion` INT(11) NULL DEFAULT NULL,
+  `Codigo_Dane` INT(11) NULL DEFAULT NULL,
+  `Codigo_Icfes` INT(11) NULL DEFAULT NULL,
+  `Nit_Colegio` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`Cod_Colegio`)
+);
+
+CREATE TABLE `falta` 
+(
+  `Cod_Falta` INT(11) NOT NULL AUTO_INCREMENT,
+  `Nombre_Falta` VARCHAR(45) NULL DEFAULT NULL,
+  `Descipcion_Falta` VARCHAR(100) NULL DEFAULT NULL,
+  PRIMARY KEY (`Cod_Falta`)
+);
+
+CREATE TABLE `observacion` 
+(
+  `Cod_Observacion` INT(11) NOT NULL AUTO_INCREMENT,
+  `Id_Docente` INT(11) NULL DEFAULT NULL,
+  `Id_Estudiante` INT(11) NULL DEFAULT NULL,
+  `Observacion` VARCHAR(100) NULL DEFAULT NULL,
+  `Fecha_Observacion` DATE NULL DEFAULT NULL,
+  `Cod_Falta` INT(11) NULL DEFAULT NULL,
+  `Compromiso_Estudiante` VARCHAR(100) NULL DEFAULT NULL,
+  `Cod_Citacion_Estudiante` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`Cod_Observacion`),
+      FOREIGN KEY (`Cod_Falta`)
+    REFERENCES `falta` (`Cod_Falta`),
+      FOREIGN KEY (`Id_Docente`)
+    REFERENCES `docente` (`Id_Docente`),
+      FOREIGN KEY (`Id_Estudiante`)
+    REFERENCES `estudiante` (`Id_Estudiante`),
+      FOREIGN KEY (`Cod_Citacion_Estudiante`)
+    REFERENCES `citacion` (`Cod_Citacion`)
+);
+
+CREATE TABLE `usuario` (
+  `Id_Usuario` INT(11) NOT NULL,
+  `Nombre_Usuario` VARCHAR(45) NULL DEFAULT NULL,
+  `Contraseña_Usuario` VARCHAR(45) NULL DEFAULT NULL,
+  `Rol_Usuario` VARCHAR(45) NULL DEFAULT NULL,
+  `Estado_Usuario` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`Id_Usuario`)
+);
+
+
+
+
